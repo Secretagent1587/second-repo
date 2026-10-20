@@ -1,0 +1,54 @@
+import random
+
+
+class Character:
+    def __init__(self, name, health, strength):
+        self.name = name
+        self.health = health
+        self.strength = strength
+
+    def take_damage(self, damage):
+        self.health -= damage
+
+    def heal(self, amount):
+        self.health += amount
+
+    def attack(self, target):
+        damage = random.randint(1, 20)
+        target.take_damage(damage)
+        print(f'{self.name} attacked {target.name} for {damage} damage!')
+
+    def is_alive(self):
+        return self.health > 0
+
+    
+
+
+john = Character('John', 100, 20)
+alex = Character('Alex', 150, 20)
+
+round_number = 1
+
+while john.is_alive() and alex.is_alive():
+    print('Round ' + str(round_number))
+
+if round_number % 2 == 0:
+    Character1, character2 = random.randint(1, 20), random.randint(1, 20)
+    john.heal(Character1)
+    alex.heal(character2)
+    print('John healed for ' + str(Character1) + ' health points')
+    print('Alex healed for ' + str(character2) + ' health points')
+    john.attack(alex)
+    if alex.is_alive():
+        alex.attack(john)
+
+    round_number +=1
+
+print('Winner is')
+
+if john.is_alive():
+    print('John')
+elif alex.is_alive():
+    print('Alex')
+else:
+    print('No one')
